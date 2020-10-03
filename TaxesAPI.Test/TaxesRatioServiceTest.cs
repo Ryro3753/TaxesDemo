@@ -67,6 +67,34 @@ namespace TaxesAPI.Test
             Assert.Equal(1.8, result);
         }
         [Fact]
+
+        public void YearlyControl_TwoText_OneRatio()
+        {
+            var taxesServiceMock = new Mock<ITaxesService>();
+            var service = new TaxesRatioService(taxesServiceMock.Object);
+            var taxesList = new List<TaxesItem>();
+            taxesList.Add(new TaxesItem {
+                Municipality = "istanbul",
+                Date = DateTime.UtcNow,
+                TaxesSchedule = "yearly",
+                TaxesRatio = 1.8
+            });
+            taxesList.Add(new TaxesItem
+            {
+                Municipality = "istanbul",
+                Date = DateTime.UtcNow.AddDays(-365),
+                TaxesSchedule = "yearly",
+                TaxesRatio = 1.1
+            });
+
+
+
+            var result = service.YearlyControl(taxesList, DateTime.UtcNow.AddDays(-365));
+
+
+            Assert.Equal(1.1, result);
+        }
+        [Fact]
         public void Test1()
         {
             //var moqDatabase = new Mock<TaxesAPI.Models.TaxesContext>();

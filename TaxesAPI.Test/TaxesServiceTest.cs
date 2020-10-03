@@ -14,22 +14,24 @@ namespace TaxesAPI.Test
         [Fact]
         public void Test1()
         {
-            //var moqDatabase = new Mock<TaxesAPI.Models.TaxesContext>();
+            var moqDatabase = new Mock<TaxesAPI.Models.TaxesContext>();
 
-            //var service = new TaxesService(moqDatabase.Object);
-            //var taxesServiceMock = new Mock<ITaxesService>();
+            var service = new TaxesService(moqDatabase.Object);
+            var taxesServiceMock = new Mock<ITaxesService>();
+            var taxesList = new List<TaxesItem>();
 
-            //taxesServiceMock.Setup(i => i.Read("istanbul")).ReturnsAsync(taxesList);
+            taxesList.Add(new TaxesItem { Municipality = "istanbul", Date = DateTime.UtcNow, TaxesSchedule = "daily", TaxesRatio = 1.2 });
+
+            taxesServiceMock.Setup(i => i.ReadAsync("istanbul")).ReturnsAsync(taxesList);
 
 
 
             ////var service = new TaxesRatioService();
 
 
-            //var taxesList = new List<TaxesItem>();
             //taxesList.Add(new TaxesItem { Municipality = "istanbul", Date = DateTime.UtcNow, TaxesSchedule = "daily", TaxesRatio = 1.2 });
             //var result = service.DailyControl(taxesList, DateTime.UtcNow.AddHours(-1));
-            //Assert.Equal(1.2, result);
+           // Assert.Equal(1.2, result);
         }
     }
 }
