@@ -16,12 +16,12 @@ namespace TaxesAPI.Controllers
     public class TaxesController : ControllerBase
     {
         private readonly TaxesContext _context;
-        private readonly ITaxes _businessService;
+        private readonly ITaxesService _businessService;
         private readonly IMapper _mapper;
 
 
 
-        public TaxesController(TaxesContext context, ITaxes businessService, IMapper mapper)
+        public TaxesController(TaxesContext context, ITaxesService businessService, IMapper mapper)
         {
             _context = context;
             _businessService = businessService;
@@ -66,10 +66,10 @@ namespace TaxesAPI.Controllers
             return await _businessService.Delete(id);
         }
 
-        [HttpPost("{dt,municipality}")]
-        public async Task<double> GetRatio(DateTime dt, string municipality)
-        {
-            return await _businessService.GetRatio(dt, municipality);
-        }
+        //[HttpPost("{dt,municipality}")]
+        //public async Task<double> GetRatio(DateTime dt, string municipality)
+        //{
+        //    return await _businessService.GetRatio(dt, municipality);
+        //}
     }
 }

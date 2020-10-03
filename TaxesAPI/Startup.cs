@@ -33,7 +33,7 @@ namespace TaxesAPI
             services.AddDbContext<TaxesContext>(opt =>
                 opt.UseInMemoryDatabase("Taxes"));
 
-            services.AddTransient<ITaxes, Taxes>();
+            services.AddTransient<ITaxesService, TaxesService>();
             services.AddAutoMapper(i => i.AddProfile<DTOProfile>());
 
         }

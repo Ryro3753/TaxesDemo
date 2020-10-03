@@ -8,6 +8,10 @@ namespace TaxesAPI.Models
 {
     public class TaxesContext : DbContext
     {
+        public TaxesContext()
+        {
+               
+        }
         public TaxesContext(DbContextOptions<TaxesContext> options)
             : base(options)
         {

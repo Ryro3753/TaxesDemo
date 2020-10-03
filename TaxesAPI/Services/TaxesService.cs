@@ -8,7 +8,7 @@ using TaxesAPI.Models;
 
 namespace TaxesAPI.Services
 {
-    public interface ITaxes
+    public interface ITaxesService
     {
         public Task<TaxesItem> Read(int id);
         public Task<IEnumerable<TaxesItem>> Read(string Municipality);
@@ -16,14 +16,13 @@ namespace TaxesAPI.Services
         public Task<int> Save(IEnumerable<TaxesItem> taxes);
         public Task<ActionResult<TaxesItem>> Delete(int id);
         public Task<IEnumerable<int>> Delete(IEnumerable<int> ids);
-        public Task<double> GetRatio(DateTime dt, string municipality);
     }
 
-    public class Taxes : ITaxes
+    public class TaxesService : ITaxesService
     {
         private readonly TaxesContext _context;
 
-        public Taxes(TaxesContext context)
+        public TaxesService(TaxesContext context)
         {
             _context = context;
         }
@@ -83,33 +82,7 @@ namespace TaxesAPI.Services
 
         }
 
-        public async Task<double> GetRatio(DateTime dt, string municipality)
-        {
-            var taxesMunicipality = await Read(municipality);
-            var list = taxesMunicipality.ToList();
-            foreach (var item in list.Where(i => i.TaxesSchedule.Equals("daily")))
-            {
-                if(item.Date == dt)
-                    return item.TaxesRatio;
-            }
-            foreach (var item in list.Where(i => i.TaxesSchedule.Equals("weekly")))
-            {
-                var cal = System.Globalization.DateTimeFormatInfo.CurrentInfo.Calendar;
-                if (item.Date.AddDays(-1 * (int)cal.GetDayOfWeek(item.Date)).Equals(dt.AddDays(-1 * (int)cal.GetDayOfWeek(dt))))
-                    return item.TaxesRatio;
-            }
-            foreach (var item in list.Where(i => i.TaxesSchedule.Equals("monthly")))
-            {
-                if (item.Date.Month.Equals(dt.Month) && item.Date.Year.Equals(dt.Year))
-                    return item.TaxesRatio;
-            }
-            foreach (var item in list.Where(i => i.TaxesSchedule.Equals("yearly")))
-            {
-                if (item.Date.Year.Equals(dt.Year))
-                    return item.TaxesRatio;
-            }
-            return 0;
-        }
+        
 
     }
 
