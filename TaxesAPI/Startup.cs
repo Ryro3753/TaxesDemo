@@ -34,6 +34,7 @@ namespace TaxesAPI
                 opt.UseInMemoryDatabase("Taxes")); //At production we have to use a persistence database like PostgreSQL, Oracle, MSSQL.
 
             services.AddTransient<ITaxesService, TaxesService>();
+            services.AddTransient<ITaxesRatioService, TaxesRatioService>();
             services.AddAutoMapper(i => i.AddProfile<DTOProfile>());
 
             services.AddCors(options =>

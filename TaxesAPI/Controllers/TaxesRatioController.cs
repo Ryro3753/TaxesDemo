@@ -25,8 +25,8 @@ namespace TaxesAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("{dt,municipality}")]
-        public async Task<double> GetRatio(DateTime dt, string municipality)
+        [HttpGet]
+        public async Task<double> GetRatio([FromQuery]DateTime dt, [FromQuery]string municipality)
         {
             return await _businessRatioService.GetRatio(dt, municipality);
         }
