@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TaxesAPI.Models;
+using CsvHelper;
+using System.IO;
+using System.Globalization;
 
 namespace TaxesAPI.Services
 {
@@ -16,6 +19,7 @@ namespace TaxesAPI.Services
         public Task<int> SaveAsync(IEnumerable<TaxesItem> taxes);
         public Task<ActionResult<TaxesItem>> DeleteAsync(int id);
         public Task<IEnumerable<int>> DeleteAsync(IEnumerable<int> ids);
+        public Task<int> ReadCSVAsync(string path);
     }
 
     public class TaxesService : ITaxesService
@@ -82,6 +86,16 @@ namespace TaxesAPI.Services
             await _context.SaveChangesAsync();
             return deleted;
 
+        }
+
+        public async Task<int> ReadCSVAsync(string path)
+        {
+            using (var reader = new StreamReader("path"))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                var records = csv.GetRecords<TaxesItem>();
+                return  await SaveAsync(records);
+            }
         }
 
         
