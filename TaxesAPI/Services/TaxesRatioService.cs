@@ -22,7 +22,7 @@ namespace TaxesAPI.Services
         }
         public async Task<double> GetRatio(DateTime dt, string municipality)
         {
-            var taxesMunicipality = await _taxesService.Read(municipality);
+            var taxesMunicipality = await _taxesService.ReadAsync(municipality);
             var list = taxesMunicipality.ToList();
             foreach (var item in list.Where(i => i.TaxesSchedule.Equals("daily")))
             {

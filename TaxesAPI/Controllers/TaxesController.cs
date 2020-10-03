@@ -38,7 +38,7 @@ namespace TaxesAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TaxesItem>> GetTaxesItem(int id)
         {
-            var taxesItem = await _businessService.Read(id); ;
+            var taxesItem = await _businessService.ReadAsync(id); ;
 
             if (taxesItem == null)
             {
@@ -54,7 +54,7 @@ namespace TaxesAPI.Controllers
             if (ModelState.IsValid)
             {
                 var item = _mapper.Map<TaxesItem>(taxesItem);
-                return await _businessService.Save(item);
+                return await _businessService.SaveAsync(item);
             }
             else
                 return BadRequest();
@@ -63,7 +63,7 @@ namespace TaxesAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<TaxesItem>> DeleteTaxesItem(int id)
         {
-            return await _businessService.Delete(id);
+            return await _businessService.DeleteAsync(id);
         }
 
         //[HttpPost("{dt,municipality}")]

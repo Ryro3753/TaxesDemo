@@ -10,12 +10,12 @@ namespace TaxesAPI.Services
 {
     public interface ITaxesService
     {
-        public Task<TaxesItem> Read(int id);
-        public Task<IEnumerable<TaxesItem>> Read(string Municipality);
-        public Task<int> Save(TaxesItem taxes);
-        public Task<int> Save(IEnumerable<TaxesItem> taxes);
-        public Task<ActionResult<TaxesItem>> Delete(int id);
-        public Task<IEnumerable<int>> Delete(IEnumerable<int> ids);
+        public Task<TaxesItem> ReadAsync(int id);
+        public Task<IEnumerable<TaxesItem>> ReadAsync(string Municipality);
+        public Task<int> SaveAsync(TaxesItem taxes);
+        public Task<int> SaveAsync(IEnumerable<TaxesItem> taxes);
+        public Task<ActionResult<TaxesItem>> DeleteAsync(int id);
+        public Task<IEnumerable<int>> DeleteAsync(IEnumerable<int> ids);
     }
 
     public class TaxesService : ITaxesService
@@ -27,15 +27,17 @@ namespace TaxesAPI.Services
             _context = context;
         }
 
-        public async Task<TaxesItem> Read(int id)
+        public async Task<TaxesItem> ReadAsync(int id)
         {
             return await _context.TaxesItem.FirstOrDefaultAsync(i => i.Id.Equals(id));
         }
-        public async Task<IEnumerable<TaxesItem>> Read(string Municipality)
+        public async Task<IEnumerable<TaxesItem>> ReadAsync(string municipality)
         {
-            return await _context.TaxesItem.Where(i => i.Municipality.Equals(Municipality)).ToListAsync();
+            if (string.IsNullOrEmpty(municipality))
+                throw new ArgumentNullException(nameof(municipality));
+            return await _context.TaxesItem.Where(i => i.Municipality.Equals(municipality)).ToListAsync();
         }
-        public async Task<int> Save(TaxesItem taxes)
+        public async Task<int> SaveAsync(TaxesItem taxes)
         {
             var isNew = await _context.TaxesItem.FindAsync(taxes.Id);
             if (isNew == null)
@@ -48,13 +50,13 @@ namespace TaxesAPI.Services
             }
             return await _context.SaveChangesAsync();
         }
-        public async Task<int> Save(IEnumerable<TaxesItem> taxes)
+        public async Task<int> SaveAsync(IEnumerable<TaxesItem> taxes)
         {
             await _context.TaxesItem.AddRangeAsync(taxes);
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<ActionResult<TaxesItem>> Delete(int id)
+        public async Task<ActionResult<TaxesItem>> DeleteAsync(int id)
         {
             var taxesItem = await _context.TaxesItem.FindAsync(id);
             if (taxesItem  != null)
@@ -64,7 +66,7 @@ namespace TaxesAPI.Services
             }
             return taxesItem;
         }
-        public async Task<IEnumerable<int>> Delete(IEnumerable<int> ids)
+        public async Task<IEnumerable<int>> DeleteAsync(IEnumerable<int> ids)
         {
             TaxesItem taxesItem;
             List<int> deleted = new List<int>();
