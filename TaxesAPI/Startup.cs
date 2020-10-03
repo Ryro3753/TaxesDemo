@@ -31,10 +31,37 @@ namespace TaxesAPI
         {
             services.AddControllers();
             services.AddDbContext<TaxesContext>(opt =>
-                opt.UseInMemoryDatabase("Taxes"));
+                opt.UseInMemoryDatabase("Taxes")); //At production we have to use a persistence database like PostgreSQL, Oracle, MSSQL.
 
             services.AddTransient<ITaxesService, TaxesService>();
             services.AddAutoMapper(i => i.AddProfile<DTOProfile>());
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.WithOrigins("http://localhost:4200")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
+              var db = new TaxesContext();
+                    db.TaxesItem.Add(new TaxesItem
+                    {
+                        Id = 1,
+                        Municipality = "Istanbul",
+                        Date = DateTime.UtcNow,
+                        TaxesSchedule = "yearly",
+                        TaxesRatio = 4
+                    });
+                    db.TaxesItem.Add(new TaxesItem {
+                        Id = 2,
+                        Municipality = "Berlin",
+                        Date = DateTime.UtcNow.AddDays(-60),
+                        TaxesSchedule = "montly",
+                        TaxesRatio = 2
+                    });
+                    db.SaveChanges();
+                    db.Dispose();
+
 
         }
 
@@ -48,7 +75,7 @@ namespace TaxesAPI
 
 
             app.UseRouting();
-
+            app.UseCors("CorsPolicy");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -1,17 +1,42 @@
-<div class="container-fluid"> 
+<div class="container-fluid">
   <h2>Taxes</h2>
   <div class="row">
     <div class="col">
-      <mat-table>
+      <button mat-button>Add new tax</button>
+      <table mat-table [dataSource]="loadedTaxes" class="mat-elevation-z8">
+        
 
-      </mat-table>
+        <ng-container matColumnDef="Municipality">
+          <th mat-header-cell *matHeaderCellDef> Municipality </th>
+          <td mat-cell *matCellDef="let element"> {{element.municipality}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Date">
+          <th mat-header-cell *matHeaderCellDef> Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="TaxesRatio">
+          <th mat-header-cell *matHeaderCellDef> TaxesRatio </th>
+          <td mat-cell *matCellDef="let element"> {{element.taxesRatio}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="TaxesSchedule">
+          <th mat-header-cell *matHeaderCellDef> TaxesSchedule </th>
+          <td mat-cell *matCellDef="let element"> {{element.taxesSchedule}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
     </div>
   </div>
 
   <h2>insert</h2>
   <div class="row">
     <div class="col">
-      
+
     </div>
   </div>
 </div>

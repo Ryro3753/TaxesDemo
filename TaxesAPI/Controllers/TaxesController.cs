@@ -65,12 +65,12 @@ namespace TaxesAPI.Controllers
         {
             return await _businessService.DeleteAsync(id);
         }
-
+        /*
         [HttpPost]
         public async Task<ActionResult<int>> ReadCVS(string path)
         {
             return await _businessService.ReadCSVAsync(path);
-        }
+        }*/
         
     }
 }
