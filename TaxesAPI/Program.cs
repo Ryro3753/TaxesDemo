@@ -22,6 +22,24 @@ namespace TaxesAPI
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    var db = new TaxesContext();
+                    db.TaxesItem.Add(new TaxesItem
+                    {
+                        Id = 1,
+                        Municipality = "Istanbul",
+                        Date = DateTime.UtcNow,
+                        TaxesSchedule = "yearly",
+                        TaxesRatio = 4
+                    });
+                    db.TaxesItem.Add(new TaxesItem {
+                        Id = 2,
+                        Municipality = "Berlin",
+                        Date = DateTime.UtcNow.AddDays(-60),
+                        TaxesSchedule = "montly",
+                        TaxesRatio = 2
+                    });
+                    db.SaveChanges();
+                    db.Dispose();
                     webBuilder.UseStartup<Startup>();
                 });
     }
