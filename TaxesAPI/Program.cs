@@ -26,16 +26,16 @@ namespace TaxesAPI
                     db.TaxesItem.Add(new TaxesItem
                     {
                         Id = 1,
-                        Municipality = "Istanbul",
+                        Municipality = "istanbul",
                         Date = DateTime.UtcNow,
                         TaxesSchedule = "yearly",
                         TaxesRatio = 4
                     });
                     db.TaxesItem.Add(new TaxesItem {
                         Id = 2,
-                        Municipality = "Berlin",
+                        Municipality = "berlin",
                         Date = DateTime.UtcNow.AddDays(-60),
-                        TaxesSchedule = "montly",
+                        TaxesSchedule = "daily",
                         TaxesRatio = 2
                     });
                     db.SaveChanges();
