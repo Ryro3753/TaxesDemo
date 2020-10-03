@@ -24,7 +24,48 @@ namespace TaxesAPI.Test
 
             Assert.Equal(1.2, result);
         }
+        [Fact]
+        public void WeeklyControl_OneText_OneRatio()
+        {
+            var taxesServiceMock = new Mock<ITaxesService>();
+            var service = new TaxesRatioService(taxesServiceMock.Object);
+            var taxesList = new List<TaxesItem>();
+            taxesList.Add(new TaxesItem { Municipality = "istanbul", Date = DateTime.UtcNow.AddDays(-3), TaxesSchedule = "weekly", TaxesRatio = 1.4 });
 
+
+            var result = service.WeeklyControl(taxesList, DateTime.UtcNow.AddDays(-4));
+
+
+            Assert.Equal(1.4, result);
+        }
+        [Fact]
+        public void MonthlyControl_OneText_OneRatio()
+        {
+            var taxesServiceMock = new Mock<ITaxesService>();
+            var service = new TaxesRatioService(taxesServiceMock.Object);
+            var taxesList = new List<TaxesItem>();
+            taxesList.Add(new TaxesItem { Municipality = "istanbul", Date = DateTime.UtcNow, TaxesSchedule = "monthly", TaxesRatio = 1.6 });
+
+
+            var result = service.MonthlyControl(taxesList, DateTime.UtcNow.AddDays(-1));
+
+
+            Assert.Equal(1.6, result);
+        }
+        [Fact]
+        public void YearlyControl_OneText_OneRatio()
+        {
+            var taxesServiceMock = new Mock<ITaxesService>();
+            var service = new TaxesRatioService(taxesServiceMock.Object);
+            var taxesList = new List<TaxesItem>();
+            taxesList.Add(new TaxesItem { Municipality = "istanbul", Date = DateTime.UtcNow, TaxesSchedule = "yearly", TaxesRatio = 1.8 });
+
+
+            var result = service.YearlyControl(taxesList, DateTime.UtcNow.AddDays(-1));
+
+
+            Assert.Equal(1.8, result);
+        }
         [Fact]
         public void Test1()
         {

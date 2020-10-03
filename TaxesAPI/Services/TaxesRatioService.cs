@@ -62,7 +62,7 @@ namespace TaxesAPI.Services
             foreach (var item in list.Where(i => i.TaxesSchedule.Equals("weekly")))
             {
                 var cal = System.Globalization.DateTimeFormatInfo.CurrentInfo.Calendar;
-                if (item.Date.Year.Equals(dt.Year) && item.Date.AddDays(-1 * (int)cal.GetDayOfWeek(item.Date)).Equals(dt.AddDays(-1 * (int)cal.GetDayOfWeek(dt))) && item.Date.Month.Equals(dt.Month))
+                if (item.Date.AddDays(-1 * (int)cal.GetDayOfWeek(item.Date)).DayOfYear.Equals(dt.AddDays(-1 * (int)cal.GetDayOfWeek(dt)).DayOfYear) )
                     return item.TaxesRatio;
             }
             return 0;
