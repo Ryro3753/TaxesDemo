@@ -66,10 +66,6 @@ namespace TaxesAPI.Controllers
             return await _businessService.DeleteAsync(id);
         }
 
-        //[HttpPost("{dt,municipality}")]
-        //public async Task<double> GetRatio(DateTime dt, string municipality)
-        //{
-        //    return await _businessService.GetRatio(dt, municipality);
-        //}
+        
     }
 }
