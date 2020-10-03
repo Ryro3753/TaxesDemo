@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+
+  taxes.api:
+    image: taxesapi
+    restart: always
+    build:
+      context: .
+      dockerfile: ./TaxesAPI/Dockerfile
+    ports:
+      - '5005:80'
+    networks:
+      - svcnw
+
+  
+
+
+networks:
+  svcnw:
+    driver: bridge
