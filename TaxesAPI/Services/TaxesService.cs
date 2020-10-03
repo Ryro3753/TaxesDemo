@@ -31,17 +31,17 @@ namespace TaxesAPI.Services
             _context = context;
         }
 
-        public async Task<TaxesItem> ReadAsync(int id)
+        public async Task<TaxesItem> ReadAsync(int id) // Single Read
         {
             return await _context.TaxesItem.FirstOrDefaultAsync(i => i.Id.Equals(id));
         }
-        public async Task<IEnumerable<TaxesItem>> ReadAsync(string municipality)
+        public async Task<IEnumerable<TaxesItem>> ReadAsync(string municipality) //Bulk Read
         {
             if (string.IsNullOrEmpty(municipality))
                 throw new ArgumentNullException(nameof(municipality));
             return await _context.TaxesItem.Where(i => i.Municipality.Equals(municipality)).ToListAsync();
         }
-        public async Task<int> SaveAsync(TaxesItem taxes)
+        public async Task<int> SaveAsync(TaxesItem taxes) //Single Insert
         {
             var isNew = await _context.TaxesItem.FindAsync(taxes.Id);
             if (isNew == null)
@@ -54,13 +54,13 @@ namespace TaxesAPI.Services
             }
             return await _context.SaveChangesAsync();
         }
-        public async Task<int> SaveAsync(IEnumerable<TaxesItem> taxes)
+        public async Task<int> SaveAsync(IEnumerable<TaxesItem> taxes)//Bulk Insert
         {
             await _context.TaxesItem.AddRangeAsync(taxes);
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<ActionResult<TaxesItem>> DeleteAsync(int id)
+        public async Task<ActionResult<TaxesItem>> DeleteAsync(int id) //Single Delete
         {
             var taxesItem = await _context.TaxesItem.FindAsync(id);
             if (taxesItem  != null)
@@ -70,7 +70,7 @@ namespace TaxesAPI.Services
             }
             return taxesItem;
         }
-        public async Task<IEnumerable<int>> DeleteAsync(IEnumerable<int> ids)
+        public async Task<IEnumerable<int>> DeleteAsync(IEnumerable<int> ids) //Bulk Delete
         {
             TaxesItem taxesItem;
             List<int> deleted = new List<int>();
@@ -88,7 +88,7 @@ namespace TaxesAPI.Services
 
         }
 
-        public async Task<int> ReadCSVAsync(string path)
+        public async Task<int> ReadCSVAsync(string path) //Read from CSV
         {
             using (var reader = new StreamReader("path"))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))

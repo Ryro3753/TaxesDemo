@@ -20,7 +20,7 @@ namespace TaxesAPI
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+                .ConfigureWebHostDefaults(webBuilder => //Seed Data
                 {
                     var db = new TaxesContext();
                     db.TaxesItem.Add(new TaxesItem

@@ -22,6 +22,7 @@ namespace TaxesAPI.Services
         }
         public async Task<double> GetRatio(DateTime dt, string municipality)
         {
+            //control on 4 schedule, smaller to larger control happening since if smaller one in range we don't need to find the ratio of larger one.
             var taxesMunicipality = await _taxesService.ReadAsync(municipality);
             var list = taxesMunicipality.ToList();
 
