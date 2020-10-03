@@ -11,7 +11,7 @@ namespace TaxesAPI.Test
     public class TaxesRatioServiceTest
     {
         [Fact]
-        public void DailyControl_OneText_OneRatio()
+        public void DailyControl_OneTax_OneRatio()
         {
             var taxesServiceMock = new Mock<ITaxesService>();
             var service = new TaxesRatioService(taxesServiceMock.Object);
@@ -25,7 +25,7 @@ namespace TaxesAPI.Test
             Assert.Equal(1.2, result);
         }
         [Fact]
-        public void WeeklyControl_OneText_OneRatio()
+        public void WeeklyControl_OneTax_OneRatio()
         {
             var taxesServiceMock = new Mock<ITaxesService>();
             var service = new TaxesRatioService(taxesServiceMock.Object);
@@ -39,7 +39,7 @@ namespace TaxesAPI.Test
             Assert.Equal(1.4, result);
         }
         [Fact]
-        public void MonthlyControl_OneText_OneRatio()
+        public void MonthlyControl_OneTax_OneRatio()
         {
             var taxesServiceMock = new Mock<ITaxesService>();
             var service = new TaxesRatioService(taxesServiceMock.Object);
@@ -53,7 +53,7 @@ namespace TaxesAPI.Test
             Assert.Equal(1.6, result);
         }
         [Fact]
-        public void YearlyControl_OneText_OneRatio()
+        public void YearlyControl_OneTax_OneRatio()
         {
             var taxesServiceMock = new Mock<ITaxesService>();
             var service = new TaxesRatioService(taxesServiceMock.Object);
@@ -68,7 +68,7 @@ namespace TaxesAPI.Test
         }
         [Fact]
 
-        public void YearlyControl_TwoText_OneRatio()
+        public void YearlyControl_TwoTax_OneRatio()
         {
             var taxesServiceMock = new Mock<ITaxesService>();
             var service = new TaxesRatioService(taxesServiceMock.Object);

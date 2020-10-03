@@ -13,6 +13,9 @@ export class AppComponent {
   title = 'TaxesClient';
   displayedColumns: string[] = ['Municipality', 'Date', 'TaxesRatio', 'TaxesSchedule'];
   loadedTaxes: any;
+  findMunicipality: string;
+  findDate: string;
+  foundRatio : any;
   addTaxesModel: TaxesItem = { id: 0, taxesRatio: 0, municipality: '', date: undefined, taxesSchedule: undefined }
   constructor(readonly httpClient: HttpClient, readonly dialog: MatDialog) {
 
@@ -27,6 +30,11 @@ export class AppComponent {
   ngOnInit() {
 
     this.list()
+  }
+  findRatio() {
+    this.httpClient.get('http://localhost:5005/api/TaxesRatio?municipality=' + this.findMunicipality + '&dt=' + this.findDate).subscribe(i => {
+      this.foundRatio = i;
+    })
   }
 
   openDialog(): void {

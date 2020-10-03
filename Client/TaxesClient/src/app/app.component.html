@@ -36,7 +36,19 @@
 
   <div class="row">
     <div class="col">
+      <p>Search Municipality</p>
+      <mat-form-field>
+        <mat-label>municipality</mat-label>
+        <input matInput [(ngModel)]="findMunicipality">
+      </mat-form-field>
+      <p>Enter a date</p>
+      <mat-form-field>
+        <mat-label>date</mat-label>
+        <input matInput [(ngModel)]="findDate">
+      </mat-form-field>
+      <button mat-raised-button (click)="findRatio()">Find Ratio</button>
 
+      <div *ngIf="foundRatio">{{foundRatio}}</div>
     </div>
   </div>
 </div>
